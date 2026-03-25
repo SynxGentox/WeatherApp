@@ -61,12 +61,14 @@ struct WeatherResponse: Codable {
 @Observable
 class WeatherData {
     //    var result: WeatherResponse = WeatherResponse(name: "", weather: [], coord: Coordinates(lat: 0.0, lon: 0.0), wind: Wind(speed: 0.0, deg: 0), visibility: 0, main: Main(temp: 0.0, feels_Like: 0.0, pressure: 0, humidity: 0, temp_min: 0.0, temp_max: 0))
-    var weather: [Weather]?
-    var name: String?
-    var coord: Coordinates?
-    var wind: Wind?
-    var visibility: Int?
-    var main: Main?
+//    var weather: [Weather]?
+//    var name: String?
+//    var coord: Coordinates?
+//    var wind: Wind?
+//    var visibility: Int?
+//    var main: Main?
+//    
+    var result: WeatherResponse?
     
     
     func loadData() async {
@@ -80,17 +82,9 @@ class WeatherData {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             
-            if let decodedData = try? decoder.decode(
+            result = try? decoder.decode(
                 WeatherResponse.self,
-                from: data
-            ) {
-                weather = decodedData.weather
-                name = decodedData.name
-                coord = decodedData.coord
-                wind = decodedData.wind
-                visibility = decodedData.visibility
-                main = decodedData.main
-            }
+                from: data)
         } catch {
             print("InvalidData")
         }
@@ -101,11 +95,24 @@ struct ContentView: View {
     @Environment(WeatherData.self) private var data
     var body: some View {
         ZStack{
-            Text(data.name ?? "errorLoadingName")
+            Text(data.result?.weather.first?.icon ?? "errorLoadingName")
                 .foregroundStyle(.primary)
                 .task {
                     await data.loadData()
                 }
+            
+            AsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(data.result?.weather.first?.icon ?? "01d")@4x.png")) { phase in
+                if let image = phase.image {
+                    image
+                        .resizable()
+                        .scaledToFit()
+                } else if phase.error !=  nil {
+                    Text("Image couldnt Load")
+                }
+                else {
+                    ProgressView()
+                }
+            }
             
             ConcentricRectangle(corners: .concentric, isUniform: true)
                 .fill(.fill.secondary)
