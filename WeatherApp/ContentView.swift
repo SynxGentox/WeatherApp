@@ -139,7 +139,6 @@ struct Main: Codable {
     
 }
 
-/// <#Description#>
 struct Wind: Codable {
     let speed: Double
     let deg: Int
