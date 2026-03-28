@@ -62,3 +62,4 @@ fastlane/screenshots/**/*.png
 fastlane/test_output
 Secrets.swiftsecret.swift
 WeatherApp/Secrets.swift
+WeatherApp/Secrets.swift
