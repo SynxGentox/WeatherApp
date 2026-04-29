@@ -8,20 +8,6 @@
 import SwiftUI
 import Observation
 
-//enum WeatherType: String, CodingKey {
-//    case longitude = "lon"
-//    case latitude = "lat"
-//    case temperature = "temp"
-//    case feelsLike = "feels_like"
-//    case pressure = "pressure"
-//    case humidity = "humidity"
-//    case visibility = "visibility"
-//    case windSpeed = "wind_speed"
-//    case windDirection = "wind_deg"
-//    case weatherDescription = "description"
-//    case cloudiness = "clouds"
-//}
-
 struct TempSize: ViewModifier {
     enum Style {
         case tempStyle
@@ -277,11 +263,9 @@ class WeatherData {
         return forecast?.list.filter { $0.dtTxt.hasPrefix(today) } ?? []
     }
     
-    // NEW: one representative temp per day (the noon slot, fallback to first)
     var dailySummary: [ForecastDetails] {
         return forecastByDay.keys.sorted().compactMap { day in
             let items = forecastByDay[day] ?? []
-            // prefer the 12:00:00 slot as it represents midday
             return items.first { $0.dtTxt.contains("12:00:00") } ?? items.first
         }
     }
@@ -316,19 +300,15 @@ class WeatherData {
         let sunrise: Double = result?.sys.sunrise ?? 0.0
         let sunset: Double =  result?.sys.sunset ?? 1.0
         if now < sunrise {
-            // before sunrise — night ending, count down to sunrise
-            // need previous sunset for this, skip for now, return 0
             return 0.0
         } else if now < sunset {
-            // daytime — 0 to 1
             return (now - sunrise) / (sunset - sunrise)
         } else {
-            // after sunset — night starting, 1 back to 0
             let nightDuration: Double = 86400 - (
                 sunset - sunrise
-            ) // seconds of night
+            )
             let nightProgress = (now - sunset) / nightDuration
-            return 1.0 - nightProgress // counts back down
+            return 1.0 - nightProgress
         }
     }
 }
@@ -357,7 +337,6 @@ struct ContentView: View {
                             }
                         }
                     }
-                    
                 } label: {
                     VStack(alignment: .leading) {
                         Text(data.result?.name ?? "")
@@ -374,7 +353,7 @@ struct ContentView: View {
                     WeatherImage(
                         data: data.result?.weather.first?.icon ?? "04d"
                     )
-                    .offset(y: 100 + (data.dayProgress * 150)) // Pushing it way down
+                    .offset(y: 100 + (data.dayProgress * 150))
                             .offset(x: 200, y: 75)
                     .animation(.smooth(duration: 1), value: data.dayProgress)
                     .shadow(
@@ -387,7 +366,7 @@ struct ContentView: View {
                     
                     MainTempView(
                         degree: $degree.unit
-                    )  // bottom layer, keeps its frame
+                    )
                     .padding(.top, 10)
                 }
                 HourlyTempView()
@@ -419,12 +398,6 @@ struct MainTempView: View {
                 .offset(x: 0, y: -30)
         }
         .padding(.leading, 20)
-        //        .shadow(
-        //            color: Color.black.opacity(0.3),
-        //            radius: 3,
-        //            x: 7,
-        //            y: 7
-        //        )
         .onTapGesture {
             if data.unit == Units.metric {
                 degree = Units.imperial
