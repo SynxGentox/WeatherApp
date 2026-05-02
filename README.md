@@ -5,8 +5,8 @@
 
 # Performance Profiles
   Benchmarked via Xcode Instruments
-  Memory: ~32MB idle, peaks at ~37MB during location switching and network fetches.
-  CPU: 0% idle footprint.
+  Memory: ~18MB - 19MB idle, ~20MB - 22MB normal usage, peaks at ~30MB during stress test (rapid location switching and network fetching).
+  CPU: 0% idle footprint, peaks at ~62% during stress test.
 
 ---
 
@@ -29,13 +29,16 @@
   Assets: Native AsyncImage for asynchronous icon loading
   Architecture
   Single-File MVVM This project utilizes a centralized WeatherData model as the observable state, treating SwiftUI views as pure rendering layers.
-  Engineering Note: This repository served as the architectural baseline for strict state management. The architecture was subsequently scaled into a fully modular Protocol-Oriented pattern in my [Expense Tracker] and true Clean Architecture with Dependency Injection in my [Aria AI] projects.
+  Engineering Note: This repository served as the architectural baseline for strict state management. The architecture was subsequently scaled into a fully modular Protocol-Oriented pattern in my [Expense Tracker](https://github.com/SynxGentox/Expense-Tracker) and true Clean Architecture with Dependency Injection in my [Aria AI](https://github.com/SynxGentox/Aria-AI) projects.
 
 ---
   
 # Screenshots
   <img src="WeatherApp/Assets/night.png" width="250"> 
   <img src="WeatherApp/Assets/clear_day.png" width="250"> 
+  <img src="WeatherApp/Assets/past_mid_night.png" width="250"> 
+  <img src="WeatherApp/Assets/memory.png" width="250"> 
+  <img src="WeatherApp/Assets/cpu.png" width="250"> 
 
 ---
 
@@ -43,9 +46,9 @@
   Clone the repository.
   Create a Secrets.swift file in the root directory (this file is ignored in .gitignore for security) and add your OpenWeatherMap API key: Swift
 
-  '''
-  struct Secrets {
-      static let weatherAPIKey = "YOUR_KEY_HERE"
-  }
-  '''
+  ```swift
+struct Secrets {
+    static let weatherAPIKey = "YOUR_KEY_HERE"
+}
+```
 
