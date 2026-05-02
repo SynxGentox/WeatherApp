@@ -11,13 +11,13 @@
 ---
 
 # Features
-🎨 Dynamic Theming: Background gradients adapt in real-time based on live weather conditions.
-☀️ Time-Aware UI: Weather icons animate dynamically (top→bottom for day, bottom→top for night) driven by live API sunrise/sunset data.
-🌡️ Interactive Data: Tap temperature to instantly toggle °C / °F and trigger live data refetches.
-📍 Quick Navigation: Tap the location header to switch between 6 pre-configured global cities via a native dropdown menu.
-⏱️ Deep Forecasting: Includes a 3-hour interval hourly forecast strip and a comprehensive 4-day daily outlook.
-💨 Advanced Metrics: Displays "feels like" temperature, humidity, pressure, visibility, wind speed, and wind direction.
-🌐 Chained Networking: Dual API call architecture — fetches current weather and seamlessly chains coordinates to fetch the extended forecast.
+  🎨 Dynamic Theming: Background gradients adapt in real-time based on live weather conditions.
+  ☀️ Time-Aware UI: Weather icons animate dynamically (top→bottom for day, bottom→top for night) driven by live API sunrise/sunset data.
+  🌡️ Interactive Data: Tap temperature to instantly toggle °C / °F and trigger live data refetches.
+  📍 Quick Navigation: Tap the location header to switch between 6 pre-configured global cities via a native dropdown menu.
+  ⏱️ Deep Forecasting: Includes a 3-hour interval hourly forecast strip and a comprehensive 4-day daily outlook.
+  💨 Advanced Metrics: Displays "feels like" temperature, humidity, pressure, visibility, wind speed, and wind direction.
+  🌐 Chained Networking: Dual API call architecture — fetches current weather and seamlessly chains coordinates to fetch the extended forecast.
 
 ---
 
